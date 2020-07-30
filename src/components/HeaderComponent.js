@@ -22,7 +22,7 @@ render(){
 return(
 
 <>
-<Navbar dark expand='md' color='dark'>
+<Navbar dark expand='md' color='warning'>
 	<div className='container'>
 		<NavbarToggler onClick={this.toggleNav} />
 		<NavbarBrand className='mr-1 display-6'>Magnetar </NavbarBrand>

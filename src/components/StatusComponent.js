@@ -1,6 +1,6 @@
-import React , {Component} from 'react';
+import React from 'react';
 import {
-  Card, CardImg, CardText, CardBody,
+  Card, CardText, CardBody,
   CardTitle
 } from 'reactstrap';
 import Typed from 'react-typed'
