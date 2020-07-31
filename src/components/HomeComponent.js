@@ -8,7 +8,8 @@ class Home extends Component {
 		super(props)
 		this.state = {
 			alarm: null,
-			events: null,
+			next_event: null,
+			event:null,
 			timeout: 5000
 		}
 	}
@@ -22,7 +23,8 @@ class Home extends Component {
 				//   console.log(data)          
 				this.setState({
 					alarm: data.alarm,
-					events: data.event
+					next_event: data.next_event,
+					event:data.event
 				})
 			}, this.state.timeout);
 			console.log("llll")
@@ -31,7 +33,8 @@ class Home extends Component {
 
 			this.setState({
 				alarm: null,
-				events: null
+				next_event: null,
+				event:null
 			})
 		}
 	}
@@ -57,11 +60,11 @@ class Home extends Component {
 						</div>
 
 						<div className='col-12 col-sm-4 mt-3 mt-sm-0'>
-							<Status alarm={this.state.alarm} />
+							<Status alarm={this.state.alarm} event={this.state.event}/>
 						</div>
 
 						<div className='col-12 col-sm-3 mt-3 mt-sm-0'>
-							<Prediction events={this.state.events} />
+							<Prediction events={this.state.next_event} />
 						</div>
 					</div>
 				</div>
