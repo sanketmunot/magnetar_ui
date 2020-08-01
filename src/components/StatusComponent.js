@@ -6,7 +6,6 @@ import {
 import Typed from 'react-typed'
 import ReactLoading from 'react-loading'
 import Blink from 'react-blink-text';
-import low from './low.png'
 
 function Status(props) {
 	var lines = {

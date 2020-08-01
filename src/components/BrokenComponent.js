@@ -12,9 +12,9 @@ function Broken(props) {
 	 }
     
     return (
-        <div className='col-12'>
+        <div className='col-sm-6 col-12'>
             <Card>
-                <img src={props.alarm + ".png"} style={{ 'height': '500px' }} />
+                <img src={props.alarm + ".png"} style={{ 'height': '300px' }} />
                 <CardBody>
                     <Typed
                         strings={lines[props.alarm]}

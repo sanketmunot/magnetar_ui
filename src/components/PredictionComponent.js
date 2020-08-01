@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-	Card ,CardText, CardBody,
+	Card, CardText, CardBody,
 	CardTitle
 } from 'reactstrap';
 import Blink from 'react-blink-text';
@@ -27,7 +27,7 @@ function Prediction(props) {
 	else {
 		return (
 			<div>
-				<Card >
+				<Card color='warning'>
 					<CardBody>
 						<CardTitle>
 							<h4>  Up in time : </h4>
@@ -35,8 +35,8 @@ function Prediction(props) {
 						<CardText>
 							<Typed
 								strings={['In the future',
-								'The prediction is a algorithm',
-							'algorithms are never perfect']}
+									'The prediction is a algorithm',
+									'algorithms are never perfect']}
 								typeSpeed={40}
 								backSpeed={50}
 								loop
@@ -44,7 +44,7 @@ function Prediction(props) {
 						</CardText>
 						<CardText>
 							<center>
-								<Blink text={props.events} fontSize='100px' />
+								<Blink color='black' text={props.events} fontSize='100px' />
 							</center>
 						</CardText>
 					</CardBody>

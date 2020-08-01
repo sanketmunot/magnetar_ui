@@ -50,7 +50,7 @@ return(
  <Jumbotron>
           <div className='container'>
             <div className='row row-header'>
-              <div className='col-12 col-sm-8'>
+              <div className='col-10 col-sm-8'>
                 <h1>Gas Authority of India Limited</h1>
                 <p className = 'display-6'>Predective Maintainence System for Real Time Alerts ! </p>
               </div>
