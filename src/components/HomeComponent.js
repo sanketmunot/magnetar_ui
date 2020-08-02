@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import Status from './StatusComponent'
 import Prediction from './PredictionComponent'
-import Broken from './BrokenComponent'
-import { Modal } from 'reactstrap'
 import Frequency from './FrequencyComponent'
 import Longest from './LongestComponent'
+import { store } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css'
+import Sensors from './SensorComponent'
+import { Modal, ModalHeader, ModalBody } from 'reactstrap'
 
 class Home extends Component {
 	constructor(props) {
@@ -14,9 +16,13 @@ class Home extends Component {
 			next_event: null,
 			event: null,
 			timeout: 5000,
-			freq: null
+			freq: null,
+			long: null,
+			sensor: null
 		}
+		this.handleNotification = this.handleNotification.bind(this)
 	}
+
 
 
 	async componentDidMount() {
@@ -29,15 +35,22 @@ class Home extends Component {
 				const freq = await fetch('http://localhost:9000/frequency')
 					.then(res => res.json())
 
+				const long = await fetch('http://localhost:9000/frequency')
+					.then(res => res.json())
+
+				const sensor = await fetch('http://localhost:9000/sensor')
+					.then(res => res.json())
 
 				this.setState({
 					alarm: data.alarm,
 					next_event: data.next_event,
 					event: data.event,
-					freq: freq
+					freq: freq,
+					long: long,
+					sensor: sensor
 				})
 			}, this.state.timeout);
-			console.log("llll")
+
 		}
 		catch (e) {
 
@@ -45,59 +58,103 @@ class Home extends Component {
 				alarm: null,
 				next_event: null,
 				event: null,
-				freq: null
+				freq: null,
+				long: null,
+				sensor: null
 			})
 		}
 	}
 
+
+
+	handleNotification(alarm) {
+		if (alarm === 'high') {
+			store.addNotification({
+				title: "Alert High Level Alarm !",
+				message: "A high level alarm is raised",
+				type: "warning",
+				insert: "top",
+				container: "top-right",
+				animationIn: ["animated", "fadeIn"],
+				animationOut: ["animated", "fadeOut"],
+				dismiss: {
+					duration: 5000,
+					onScreen: true
+				}
+			});
+		}
+		else if (alarm === 'medium') {
+			store.addNotification({
+				title: "Medium Alarm !",
+				message: "A medium level alarm is raised",
+				type: "info",
+				insert: "top",
+				container: "top-right",
+				animationIn: ["animated", "fadeIn"],
+				animationOut: ["animated", "fadeOut"],
+				dismiss: {
+					duration: 5000,
+					onScreen: true
+				}
+			});
+		}
+
+		else if (alarm === 'broken') {
+			if (!this.props.isOpen) {
+				this.props.toggleModal()
+			}
+		}
+
+	}
+
 	render() {
-		if (this.state.alarm == 'broken' || this.state.alarm == 'recovery') {
-			return (
-
-				<div className='container'>
-					<div className='col-12'>
-						<div><iframe src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=en&size=large&timezone=Asia%2FKolkata" style={{ 'pointer-events': 'none' }} width="100%" height="140" frameborder="0" default></iframe> </div>
-					</div>
-					<div className='row'>
-						<Broken alarm={this.state.alarm} />
-						<div className='col-12 col-sm-6 mt-3' >
-							<Frequency data={this.state.freq} />
-							<Longest data={this.state.freq}/>
-						</div>
-					</div>
-				</div>
-			)
-		}
-		else {
-			return ( //for event
-				<div className='container'>
-					<div className='row'>
-
-						<div className='col-12 col-sm-4'>
-							<div><iframe src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=en&size=large&timezone=Asia%2FKolkata" style={{ 'pointer-events': 'none' }} width="100%" height="140" frameborder="0" default></iframe> </div>
-						</div>
-
-						<div className='col-12 col-sm-4 mt-3 mt-sm-0'>
-							<Status alarm={this.state.alarm} event={this.state.event} />
-						</div>
-
-						<div className='col-12 col-sm-3 mt-3 mt-sm-0'>
-							<Prediction events={this.state.next_event} />
-						</div>
+		return ( //for event
+			<div className='container-fluid'>
+				{this.handleNotification(this.state.alarm)}
+				<div className='row'>
+					<div className='col-12 col-sm-2 mt-3 ' >
+						<Frequency data={this.state.freq} />
 					</div>
 
-					<div className='row'>
-						<div className='col-12 col-sm-5 mt-3' >
-							<Frequency data={this.state.freq} />
-						</div>
+					<div className='col mt-3'>
+						<div className='row'>
+							<div className='col-12 col-sm-4 '>
+								<Status alarm={this.state.alarm} event={this.state.event} />
+							</div>
 
-						<div className='col-12 col-sm-5 mt-3 ml-2' >
-							<Longest data={this.state.freq} />
+							<div className='col-12 col-sm-4 mt-3 mt-sm-0'>
+								<Prediction events={this.state.next_event} />
+							</div>
+
+							<div className='col-12 col-sm-3 mt-3' >
+								<Longest data={this.state.long} />
+							</div>
+						</div>
+						<div className='row'>
+
+							<div className='col-sm-10 mt-3'>
+								<Sensors data={this.state.sensor} />
+
+							</div>
 						</div>
 					</div>
 				</div>
-			)
-		}
+
+				<Modal isOpen={this.props.isOpen} >
+					<ModalHeader >Broken! Dangerous Alarm</ModalHeader>
+					<ModalBody>
+						<strong>
+							The system has been been broken,
+							Please follow the advisory.
+						</strong>
+						<button className='btn btn-primary' onClick={this.props.toggleModal}>Submit</button>
+					</ModalBody>
+				</Modal>
+
+
+			</div>
+		)
+
 	}
 }
 export default Home

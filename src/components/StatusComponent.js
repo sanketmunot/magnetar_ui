@@ -12,26 +12,30 @@ function Status(props) {
 		'normal': ['Amigo', 'System is Running fine', 'Everything is cool'],
 		'low': ['Seniore', 'A little problem detected', 'Good tolook here and there'],
 		'medium': ['Hello', 'System is Running Quite well', 'Dont overlook', 'Look around for Flaws'],
-		'high': ['Call for backup', 'System might fall any time soon', 'Need technicians urgently']
+		'high': ['Call for backup', 'System might fall any time soon', 'Need technicians urgently'],
+		'recovery':['The sysytem was misleaded into dark','Please wait till it heals','Healing process for the sysytem is running','........'],
+		'broken':['seems predictions were not monitored properly','Work done half is dangerous','The system is broken it may take A Day, A Week, A Month.... A Decade..... Wait a decade is 10 years right?'],
 	}
 
 	var color = {
 		'normal' : 'green',
 		'low' : 'yellow',
 		'medium' : 'orange',
-		'high' : 'red'
+		'high' : 'red',
+		'recovery':'blue',
+		'broken':'maroon'
 	}
 
 	if (!props.alarm) {
 		return (
-			<Card>
+			<Card >
 				<center>
 					<ReactLoading className='m-4' type='spinningBubbles' color='black' />
 				</center>
 				<CardBody>
 					<CardTitle>
-						<i className='fa fa-eye mr-2' style={{ 'font-size': '18px' }}></i>
-						<strong>  Status </strong>
+						
+						<h4><i className='fa fa-eye mr-2' style={{ 'font-size': '18px' }}></i> Current Status </h4>
 					</CardTitle>
 				</CardBody>
 			</Card>
@@ -49,14 +53,14 @@ function Status(props) {
 
 					<CardBody>
 						<CardTitle>
-							<i className='fa fa-eye mr-2' style={{ 'font-size': '18px' }}></i>
-							<strong>  Status </strong>
+						<h4><i className='fa fa-eye mr-2' style={{ 'font-size': '18px' }}></i> Current Status - {props.alarm.toUpperCase()} Condition </h4>
+						
 						</CardTitle>
 						<CardText>
 							<Typed
 								strings={lines[props.alarm]}
-								typeSpeed={40}
-								backSpeed={50}
+								typeSpeed={60}
+								backSpeed={100}
 								loop
 							/>
 						</CardText>

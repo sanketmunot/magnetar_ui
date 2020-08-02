@@ -13,7 +13,7 @@ class Longest extends Component {
     render() {
         if (!this.props.data) {
             return (
-                <div className='mt-3'>
+                <div >
                 <Card color='dark' inverse>
                     <center>
                         <ReactLoading className='m-4' type='spinningBubbles' color='black' />
@@ -31,13 +31,13 @@ class Longest extends Component {
         else {
             var i = 1
             var c = this.props.data.map((f) => {
-                return (<CardText className='col-3'>
+                return (<CardText className='col-12'>
                     <span>{i++}. </span>
                     <strong>{f.alarm}</strong>
                 </CardText>)
             })
             return (
-                <div className='mt-4'>
+                <div >
                     <Card inverse color='dark'>
                         <CardBody>
                             <CardTitle>
@@ -45,7 +45,7 @@ class Longest extends Component {
                                 <strong>  Longest Time Lived </strong>
                             </CardTitle>
                             <hr />
-                            <div className='row'>
+                            <div className='row' style={{overflow:'auto',maxHeight:'8rem'}}>
                                 {c}
                             </div>
                         </CardBody>
